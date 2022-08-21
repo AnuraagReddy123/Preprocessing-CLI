@@ -120,7 +120,7 @@ if __name__ == '__main__':
                         else:
                             break
                     
-                    print_rows(data, 6)
+                    print_rows(data, rows)
                     print()
 
             
