@@ -31,5 +31,41 @@ if __name__ == '__main__':
     # Read file
     df = pd.read_csv(args.file)
     print('Columns present in the given dataset: ')
-    for col in df.columns:
-        print(col, end=', ')
+    print(', '.join(df.columns))
+    print()
+
+    # Ask for target variable
+    target = ''
+
+    while True:
+        target = input('Which is the target variable (-1 to exit): ')
+        if target != '-1':
+            if target not in df.columns:
+                print('Enter a column name from the list of columns')
+            break
+        else:
+            exit()
+
+    print()
+
+    print('Tasks (Preprocessing)')
+    print()
+    print('1. Data Description')
+    print('2. Handling NULL values')
+    print('3. Encoding Categorical Data')
+    print('4. Feature scaling of the dataset')
+    print('5. Download the modified dataset')
+    print()
+
+    resp = 0
+    while True:
+        try:
+            resp = int(input('What do you want to do? (-1 to exit): '))
+            assert resp in [-1, 1, 2, 3, 4, 5]
+            break
+        except:
+            print('Enter a valid digit from the above')
+
+    if resp == -1:
+        exit()
+
