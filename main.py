@@ -5,8 +5,9 @@ import os
 import numpy as np
 import pandas as pd
 
-join = os.path.join
+from data_description import *
 
+join = os.path.join
 
 def isValidFile(file):
     assert os.path.exists(join(os.getcwd(), file)) and file[-3:] == 'csv'
@@ -42,30 +43,88 @@ if __name__ == '__main__':
         if target != '-1':
             if target not in df.columns:
                 print('Enter a column name from the list of columns')
-            break
+            else:
+                break
         else:
             exit()
 
     print()
 
-    print('Tasks (Preprocessing)')
-    print()
-    print('1. Data Description')
-    print('2. Handling NULL values')
-    print('3. Encoding Categorical Data')
-    print('4. Feature scaling of the dataset')
-    print('5. Download the modified dataset')
-    print()
+    data = df.drop([target], axis=1).copy()
 
-    resp = 0
     while True:
-        try:
-            resp = int(input('What do you want to do? (-1 to exit): '))
-            assert resp in [-1, 1, 2, 3, 4, 5]
-            break
-        except:
-            print('Enter a valid digit from the above')
+        print('Tasks (Preprocessing)')
+        print()
+        print('1. Data Description')
+        print('2. Handling NULL values')
+        print('3. Encoding Categorical Data')
+        print('4. Feature scaling of the dataset')
+        print('5. Download the modified dataset')
+        print()
 
-    if resp == -1:
-        exit()
+        task = 0
+        while True:
+            try:
+                task = int(input('What do you want to do? (-1 to exit): '))
+                assert task in [-1, 1, 2, 3, 4, 5]
+                break
+            except:
+                print('Enter a valid digit from the above')
+
+        if task == -1:
+            break
+        print()
+        
+        while True:
+            if task == 1:
+                print('Tasks (Data Description)')
+                print()
+                print('1. Describe a specific column')
+                print('2. Show properties of each column')
+                print('3. Show the dataset')
+                print()
+
+                while True:
+                    resp = int(input("What do you want to do? (-1 to go back): "))
+                    if resp not in [-1, 1, 2, 3]:
+                        print('Enter a valid digit')
+                    else:
+                        break
+                
+                if resp == -1:
+                    break
+
+                print()
+                if resp == 1:
+                    print('Columns:', ', '.join(data.columns))
+                    while True:
+                        col = input('Which column?: ')
+                        if col not in data.columns:
+                            print('Enter valid column name')
+                        else:
+                            break
+                    
+                    print()
+                    specific_column(data, col)
+                    print()
+
+                if resp == 2:
+                    all_columns(data)
+                    print()
+                
+                if resp == 3:
+                    while True:
+                        rows = int(input("How many rows (>0) to print?: "))
+                        if rows <= 0:
+                            print(">0 rows")
+                        else:
+                            break
+                    
+                    print_rows(data, 6)
+                    print()
+
+            
+
+
+
 
