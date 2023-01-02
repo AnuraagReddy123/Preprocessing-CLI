@@ -7,6 +7,8 @@ import pandas as pd
 
 from data_description import *
 from imputation import *
+from categorical import *
+from feature_scaling import *
 
 join = os.path.join
 
@@ -188,7 +190,165 @@ if __name__ == '__main__':
                     
                     print_rows(data, rows)
                     print()
+        
+            elif task == 3: # Encoding Categorical Data
+                print('Tasks (Encoding Categorical Data)')
+                print()
+                print('1. Show Categorical columns')
+                print('2. Perform One Hot Encoding')
+                print('3. Show the dataset')
+                print()
 
+                while True:
+                    resp = int(input("What do you want to do? (-1 to go back): "))
+                    if resp not in [-1, 1, 2, 3]:
+                        print('Enter a valid digit')
+                    else:
+                        break
+                
+                if resp == -1:
+                    break
+
+                print()
+
+                if resp == 1:
+                    print('Categorical columns')
+                    print()
+                    print(getCategoricalColumns(data))
+                    print()
+                
+                elif resp == 2:
+                    print('Columns:', ', '.join(data.columns))
+                    print('Enter columns separated by space')
+                    cols = input('Which columns to encode?: ').split()
+                    data = oneHotEncoding(data, cols)
+                    print()
+            
+                elif resp == 3:
+                    while True:
+                        rows = int(input("How many rows (>0) to print?: "))
+                        if rows <= 0:
+                            print(">0 rows")
+                        else:
+                            break
+                    
+                    print_rows(data, rows)
+                    print()
+                
+            elif task == 4: # Feature scaling of the dataset
+                print('Tasks (Feature scaling of the dataset)')
+                print()
+                print('1. Perform Normalization (MinMax Scaler)')
+                print('2. Perform Standardization (Standard Scaler)')
+                print('3. Show the dataset')
+                print()
+
+                while True:
+                    resp = int(input("What do you want to do? (-1 to go back): "))
+                    if resp not in [-1, 1, 2, 3]:
+                        print('Enter a valid digit')
+                    else:
+                        break
+
+                if resp == -1:
+                    break
+
+                print()
+
+                if resp == 1:
+                    print('Tasks (Normalization)')
+                    print()
+                    print('1. Normalize a specific column')
+                    print('2. Normalize all columns')
+                    print()
+
+                    while True:
+                        resp = int(input("What do you want to do? (-1 to go back): "))
+                        if resp not in [-1, 1, 2]:
+                            print('Enter a valid digit')
+                        else:
+                            break
+                    
+                    if resp == -1:
+                        break
+
+                    print()
+
+                    if resp == 1:
+                        print('Columns:', ', '.join(data.columns))
+                        col = input('Which column?: ')
+                        data = minMaxScalerColumn(data, col)
+                        print()
+
+                    elif resp == 2:
+                        data = minMaxScaler(data)
+                        print()
+                    
+                elif resp == 2:
+                    print('Tasks (Standardization)')
+                    print()
+                    print('1. Standardize a specific column')
+                    print('2. Standardize all columns')
+                    print()
+
+                    while True:
+                        resp = int(input("What do you want to do? (-1 to go back): "))
+                        if resp not in [-1, 1, 2]:
+                            print('Enter a valid digit')
+                        else:
+                            break
+                    
+                    if resp == -1:
+                        break
+
+                    print()
+
+                    if resp == 1:
+                        print('Columns:', ', '.join(data.columns))
+                        col = input('Which column?: ')
+                        data = standardScalerColumn(data, col)
+                        print()
+
+                    elif resp == 2:
+                        data = standardScaler(data)
+                        print()
+                    
+                elif resp == 3:
+                    while True:
+                        rows = int(input("How many rows (>0) to print?: "))
+                        if rows <= 0:
+                            print(">0 rows")
+                        else:
+                            break
+                    
+                    print_rows(data, rows)
+                    print()
+                
+            elif task == 5: # Download the dataset
+                print('Tasks (Download the dataset)')
+                print()
+                print('1. Download the dataset')
+                print()
+
+                while True:
+                    resp = int(input("What do you want to do? (-1 to go back): "))
+                    if resp not in [-1, 1]:
+                        print('Enter a valid digit')
+                    else:
+                        break
+                
+                if resp == -1:
+                    break
+
+                print()
+
+                if resp == 1:
+                    # Ask filename
+                    filename = input('Filename: ')
+                    # Save the dataset
+                    data.to_csv(filename, index=False)
+                    print('Dataset saved')
+                    print()
 
 
 
