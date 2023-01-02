@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 
 from data_description import *
+from imputation import *
 
 join = os.path.join
 
@@ -72,11 +73,11 @@ if __name__ == '__main__':
                 print('Enter a valid digit from the above')
 
         if task == -1:
-            break
+            break # Exits program
         print()
         
         while True:
-            if task == 1:
+            if task == 1: # Data Description
                 print('Tasks (Data Description)')
                 print()
                 print('1. Describe a specific column')
@@ -122,8 +123,73 @@ if __name__ == '__main__':
                     
                     print_rows(data, rows)
                     print()
-
             
+            elif task == 2: # Handling NULL values
+                print('Tasks (Handling NULL values)')
+                print()
+                print('1. Show number of NULL values')
+                print('2. Remove columns')
+                print('3. Fill NULL values (with mean)')
+                print('4. Fill NULL values (with median)')
+                print('5. Fill NULL values (with mode)')
+                print('6. Show the dataset')
+                print()
+
+                while True:
+                    resp = int(input("What do you want to do? (-1 to go back): "))
+                    if resp not in [-1, 1, 2, 3, 4, 5, 6, 7]:
+                        print('Enter a valid digit')
+                    else:
+                        break
+                
+                if resp == -1:
+                    break
+                
+                print()
+
+                if resp == 1:
+                    print('Number of NULL values in each column')
+                    print()
+                    print(data.isnull().sum())
+                    print()
+                
+                elif resp == 2:
+                    print('Columns:', ', '.join(data.columns))
+                    print('Enter columns separated by space')
+                    cols = input('Which columns to remove?: ').split()
+                    data = removeColumns(data, cols)
+                    print()
+
+                elif resp == 3:
+                    print('Columns:', ', '.join(data.columns))
+                    col = input('Which column?: ')
+                    data = impute(data, col, 'mean')
+                    print()
+                
+                elif resp == 4:
+                    print('Columns:', ', '.join(data.columns))
+                    col = input('Which column?: ')
+                    data = impute(data, col, 'median')
+                    print()
+                
+                elif resp == 5:
+                    print('Columns:', ', '.join(data.columns))
+                    col = input('Which column?: ')
+                    impute(data, col, 'mode')
+                    print()
+                
+                elif resp == 6:
+                    while True:
+                        rows = int(input("How many rows (>0) to print?: "))
+                        if rows <= 0:
+                            print(">0 rows")
+                        else:
+                            break
+                    
+                    print_rows(data, rows)
+                    print()
+
+
 
 
 
